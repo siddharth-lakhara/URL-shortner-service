@@ -6,7 +6,8 @@ module.exports = [{
   path: '/short',
   handler: (req, reply) => {
     const longURL = req.payload.url;
-    const shortURL = getShortUrl(longURL);
-    reply(`Short URL is ${shortURL}`);
+    getShortUrl(longURL).then((shortURL) => {
+      reply(`Short URL is ${shortURL}`);
+    });
   },
 }];

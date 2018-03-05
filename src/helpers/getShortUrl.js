@@ -1,7 +1,7 @@
 const urlShortner = require('./urlShortner');
 const Models = require('../../models');
 
-const getShortUrl = (longurl) => {
+const getShortUrl = longurl => new Promise((resolve) => {
   let start = 0;
   let end = 6;
   let shorturl = urlShortner(longurl, start, end);
@@ -22,9 +22,10 @@ const getShortUrl = (longurl) => {
         shorturl = urlShortner(longurl, start, end);
       }
     }
+    resolve(shorturl);
   });
-  return shorturl;
-};
+  // return shorturl;
+});
 
 
 module.exports = getShortUrl;
