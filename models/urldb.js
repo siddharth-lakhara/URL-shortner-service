@@ -1,11 +1,23 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
-  var urldb = sequelize.define('urldb', {
+  const urldb = sequelize.define('urldb', {
     longurl: DataTypes.STRING,
-    shorturl: DataTypes.STRING
+    shorturl: DataTypes.STRING(6),
   }, {});
-  urldb.associate = function(models) {
-    // associations can be defined here
+  urldb.createObject = (obj) => {
+    const promise = urldb.findOrCreate({
+      where: {
+        shorturl: obj.shorturl,
+      },
+      defaults: {
+        longurl: obj.longurl,
+      },
+    }).spread((newObject, created) => ({
+      newObject,
+      created,
+    }));
+    return promise;
   };
   return urldb;
 };
+
