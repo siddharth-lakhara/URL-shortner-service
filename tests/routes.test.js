@@ -9,8 +9,9 @@ describe('Test for shortner api', () => {
         url: 'http://mypersonalurl0.com',
       }),
     };
-    server.inject(options).then((res) => {
+    server.inject(options, (res) => {
       expect(res.statusCode).toBe(200);
+      done();
     });
   });
 });

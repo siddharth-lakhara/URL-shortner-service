@@ -16,7 +16,7 @@ const changeObjectToArray = (shortURLObject) => {
 
 const seedFn = () => {
   const shortURLObject = {};
-  for (let i = 0; i < 100000; i += 1) {
+  for (let i = 0; i < 1000000; i += 1) {
     let start = 0;
     let end = 6;
     let x = true;

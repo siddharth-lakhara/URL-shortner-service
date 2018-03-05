@@ -8,10 +8,15 @@ server.connection({
 });
 
 server.route(Route);
-server.start((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('server started at port: ', server.info.uri);
-  }
-});
+
+if (!module.parent) {
+  server.start((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('server started at port: ', server.info.uri);
+    }
+  });
+}
+
+module.exports = server;

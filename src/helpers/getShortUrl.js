@@ -7,21 +7,22 @@ const getShortUrl = (longurl) => {
   let shorturl = urlShortner(longurl, start, end);
 
   let x = true;
-  while (x) {
-    const result = Models.urldb.createObject({
-      longurl,
-      shorturl,
-    });
-    if (result.created) {
-      x = false;
-    } else if (result.newObject.longurl === longurl) { // this url already exists
-      x = false;
-    } else {
-      start += 6;
-      end += 6;
-      shorturl = urlShortner(longurl, start, end);
+  Models.urldb.createObject({
+    longurl,
+    shorturl,
+  }).then((result) => {
+    while (x) {
+      if (result.created) {
+        x = false;
+      } else if (result.newObject.longurl === longurl) { // this url already exists
+        x = false;
+      } else {
+        start += 6;
+        end += 6;
+        shorturl = urlShortner(longurl, start, end);
+      }
     }
-  }
+  });
   return shorturl;
 };
 
