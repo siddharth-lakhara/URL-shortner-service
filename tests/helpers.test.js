@@ -1,8 +1,9 @@
 const urlShortner = require('../src/helpers/urlShortner');
 const getShortURL = require('../src/helpers/getShortUrl');
+const insertIntoDB = require('../src/helpers/insertIntoDB');
 const Models = require('../models');
 
-beforeEach((done) => {
+beforeAll((done) => {
   Models.urldb.destroy({ truncate: true })
     .then(() => { done(); });
 });
@@ -33,18 +34,21 @@ describe('tests for hashing function: ', () => {
 describe('Tests for getShortURL in helpers', () => {
   test('return expected shortURL with length 6', (done) => {
     const longURL = 'http://someURL.com';
-    const shortURL = getShortURL(longURL);
-    expect(shortURL).toEqual('d705e5');
-    done();
+    getShortURL(longURL).then((shortURL) => {
+      expect(shortURL).toEqual('d705e5');
+      done();
+    });
   });
 
   test('returns different short URL for different url', (done) => {
     const longURL1 = 'http://someURL.com';
     const longURL2 = 'http://anotherURL.com';
-    const shortURL1 = getShortURL(longURL1);
-    const shortURL2 = getShortURL(longURL2);
-    expect(shortURL1 === shortURL2).toBeFalsy();
-    done();
+    getShortURL(longURL1).then((shortURL1) => {
+      getShortURL(longURL2).then((shortURL2) => {
+        expect(shortURL1 === shortURL2).toBeFalsy();
+        done();
+      });
+    });
   });
 });
 
@@ -94,13 +98,33 @@ describe('createObject in models', () => {
         longurl: longURL2,
         shorturl: shortURL,
       }).then((returnObject) => {
-        // returns object for longURL1
         // console.log('shortURL: ', returnObject.newObject.shorturl);
         // console.log('longURL: ', returnObject.newObject.longurl);
         // console.log('created: ', returnObject.created);
+
+        // returns object for longURL1
         expect(returnObject.created).toBeFalsy();
         expect(returnObject.newObject.shorturl).toEqual(shortURL);
         expect(returnObject.newObject.longurl).toEqual(longURL1);
+        done();
+      });
+    });
+  });
+});
+
+describe('tests for insertIntoDB helper', () => {
+  test('Testing for collisions', (done) => {
+    const longURL1 = 'http://insertUrl1.com';
+    const longURL2 = 'http://insertUrl2.com';
+    const shortURL = 'poiuyt';
+    const obj1 = { longurl: longURL1, shorturl: shortURL };
+    const obj2 = { longurl: longURL2, shorturl: shortURL };
+
+    insertIntoDB(obj1, 0, 6).then((newShortURL1) => {
+      insertIntoDB(obj2, 0, 6).then((newShortURL2) => {
+        // console.log('ShortURL1: ', newShortURL1);
+        // console.log('ShortURL2: ', newShortURL2);
+        expect(newShortURL1 === newShortURL2).toBeFalsy();
         done();
       });
     });
