@@ -7,7 +7,8 @@
     "start": "node src/server.js",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
-    "test": "jest tests/ --coverage --notify"
+    "seed_test": "NODE_ENV=test sequelize db:seed:undo:all && NODE_ENV=test sequelize db:seed:all",
+    "test": "NODE_ENV=test jest tests/ --coverage --notify"
   },
   "author": "",
   "license": "ISC",
