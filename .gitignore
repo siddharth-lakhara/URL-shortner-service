@@ -2,3 +2,5 @@ node_modules
 .vscode
 try.js
 coverage
+redis-stable
+redis-stable.tar.gz
