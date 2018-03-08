@@ -38,6 +38,13 @@ describe('Test for /long and redis', () => {
     });
   });
 
+  test('replies invalid url when the given short url doesnt exist in db', (done) => {
+    server.inject('/long?shortUrl=eeeeee', (res) => {
+      expect(res.payload).toEqual('Invalid URL');
+      done();
+    });
+  });
+
   test('redis stores the key 10400', (done) => {
     const shortUrl = 100400;
     client.get(shortUrl, (err, data) => {
