@@ -20,7 +20,7 @@ module.exports = [{
             if (searchResult === null) {
               reply('Invalid URL');
             } else {
-              // client.set(shorturl, searchResult.longurl, redis.print);
+              client.set(shorturl, searchResult.longurl, redis.print);
               reply(searchResult.longurl);
             }
           });
