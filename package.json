@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "good": "^7.3.0",
+    "good-console": "^6.4.1",
+    "good-squeeze": "^5.0.2",
     "hapi": "^16.6.3",
     "joi": "^13.1.2",
     "pg": "^7.4.1",
