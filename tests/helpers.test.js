@@ -3,8 +3,21 @@ const getShortURL = require('../src/helpers/getShortUrl');
 const insertIntoDB = require('../src/helpers/insertIntoDB');
 const Models = require('../models');
 
-beforeAll((done) => {
-  Models.urldb.destroy({ truncate: true })
+beforeAll((done) => { // destroying all entries which are used in tests
+  Models.urldb.destroy({
+    where: {
+      longurl: [
+        'http://someURL.com',
+        'http://anotherURL.com',
+        'http://somenewURL.com',
+        'http://someurlagain.com',
+        'http://insertUrl1.com',
+        'http://insertUrl2.com',
+        'http://firstTestUrl.com',
+        'http://secondTestUrl.com',
+      ],
+    },
+  })
     .then(() => { done(); });
 });
 
@@ -55,11 +68,12 @@ describe('Tests for getShortURL in helpers', () => {
 describe('createObject in models', () => {
   test('Creates new Object for new URL', (done) => {
     const longURL = 'http://somenewURL.com';
-    const shortURL = 'abcdef';
+    const shortURL = 'abbdef';
     Models.urldb.createObject({
       longurl: longURL,
       shorturl: shortURL,
     }).then((returnObject) => {
+      // console.log('Checking return Object: ', returnObject);
       expect(returnObject.created).toBeTruthy();
       expect(returnObject.newObject.shorturl).toEqual(shortURL);
       expect(returnObject.newObject.longurl).toEqual(longURL);

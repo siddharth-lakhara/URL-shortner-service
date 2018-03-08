@@ -2,7 +2,7 @@ const server = require('../src/server');
 const client = require('redis').createClient();
 
 beforeAll((done) => { // delet all pre stored keys
-  client.flushdb((err, success) => {
+  client.flushdb(() => {
     done();
   });
 });
@@ -46,13 +46,13 @@ describe('Test for /long and redis', () => {
     });
   });
 
-  test('A key if redis doesn\'t have, it will create a new one', () => {
+  test('A key if redis doesn\'t have, it will create a new one', (done) => {
     const shortUrl = 101328;
     client.get(shortUrl, (err, data) => { // before ping, redis didnt had key
       expect(data).toBe(null);
-      server.inject('/long?shortUrl=101328', (res) => { // now making an entry in redis
-        client.get(shortUrl, (err, data) => { // test for available key
-          expect(data).toBe('http://mypersonalurl96536.com');
+      server.inject('/long?shortUrl=101328', () => { // now making an entry in redis
+        client.get(shortUrl, (err2, data2) => { // test for available key
+          expect(data2).toBe('http://mypersonalurl96536.com');
           done();
         });
       });
