@@ -2,6 +2,11 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2
 jobs:
   build:
@@ -21,6 +26,7 @@ jobs:
         - POSTGRES_USER: url
         
       - image: redis
+      
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -46,4 +52,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: yarn run ci_test
+      - run: yarn ci_test
