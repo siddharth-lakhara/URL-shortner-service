@@ -8,7 +8,10 @@
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
     "seed_test": "NODE_ENV=test sequelize db:seed:undo:all && NODE_ENV=test sequelize db:seed:all",
-    "test": "NODE_ENV=test jest tests/ --coverage --notify"
+    "test": "NODE_ENV=test jest tests/ --coverage --notify",
+    "ci_test": "NODE_ENV=ci_test sequelize db:migrate:undo:all && NODE_ENV=ci_test sequelize db:migrate && NODE_ENV=ci_test node_modules/.bin/jest --coverage --runInBand --forceExit",
+    "pm2start": "node_modules/.bin/pm2 start /src/server.js -i max --no-daemon",
+    "pm2stop": "node_modules/.bin/pm2 stop all"
   },
   "author": "",
   "license": "ISC",

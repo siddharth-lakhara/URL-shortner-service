@@ -19,5 +19,12 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "postgres"
+  },
+  "ci_test": {
+  "username": "url",
+  "password": "root",
+  "database": "urldb_test",
+  "host": "127.0.0.1",
+  "dialect": "postgres"
   }
 }
