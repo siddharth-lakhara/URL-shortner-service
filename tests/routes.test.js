@@ -32,8 +32,8 @@ describe('Test for /long and redis', () => {
   });
 
   test('/long gives desired long url', (done) => {
-    server.inject('/long?shortUrl=100400', (res) => {
-      expect(res.payload).toEqual('http://mypersonalurl603060.com');
+    server.inject('/long?shortUrl=108701', (res) => {
+      expect(res.payload).toEqual('http://mypersonalurl18875.com');
       done();
     });
   });
@@ -45,10 +45,10 @@ describe('Test for /long and redis', () => {
     });
   });
 
-  test('redis stores the key 10400', (done) => {
-    const shortUrl = 100400;
+  test('redis stores the key 108701', (done) => {
+    const shortUrl = 108701;
     client.get(shortUrl, (err, data) => {
-      expect(data).toEqual('http://mypersonalurl603060.com');
+      expect(data).toEqual('http://mypersonalurl18875.com');
       done();
     });
   });
