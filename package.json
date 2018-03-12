@@ -25,9 +25,7 @@
     "redis": "^2.8.0",
     "redis-cli": "^1.0.2",
     "sequelize": "^4.35.2",
-    "sequelize-cli": "^4.0.0"
-  },
-  "devDependencies": {
+    "sequelize-cli": "^4.0.0",
     "jest": "^22.4.2"
   }
 }
